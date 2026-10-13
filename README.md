@@ -38,6 +38,10 @@ A match halfway through (seed 42):
 
 ![A match in the terminal, with your board on the left and your shots on the right](docs/screenshot.png)
 
+And the end of a match won in 34 shots, with the stats for both sides:
+
+![The last shot sinks the enemy destroyer and the game shows the victory and the match stats](docs/screenshot-victory.png)
+
 You can see the AI at work: after hitting the ships on rows 7 and 10, it kept shooting around them until they sank.
 
 The boards are colored when the game runs in a terminal. If you redirect the output to a file it goes without colors, and `NO_COLOR=1` turns them off.
