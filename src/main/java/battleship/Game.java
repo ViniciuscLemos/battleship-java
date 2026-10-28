@@ -46,13 +46,15 @@ public class Game {
         cpuFleet    = new Fleet(cpuBoard,    buildShips());
     }
 
-    public void run() {
+    /** Plays one match. Returns {@code true} if the player won. */
+    public boolean run() {
         System.out.println("=== BATTLESHIP ===");
         setupPlayerFleet();
         cpuFleet.placeAllRandom(rng);
         playLoop();
         printStats();
         askShowLog();
+        return cpuFleet.allSunk();
     }
 
     private void setupPlayerFleet() {
