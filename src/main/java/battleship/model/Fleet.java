@@ -118,6 +118,17 @@ public class Fleet {
         return id < 0 ? null : ships[id].getName();
     }
 
+    /** "Carrier (5), Cruiser (3)": the ships still afloat, so you know what you're hunting. */
+    public String aliveShips() {
+        StringBuilder sb = new StringBuilder();
+        for (Ship s : ships) {
+            if (s.isSunk()) continue;
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(s.getName()).append(" (").append(s.getSize()).append(')');
+        }
+        return sb.toString();
+    }
+
     /** Counts how many ships haven't been sunk yet. */
     public int shipsAlive() {
         int count = 0;

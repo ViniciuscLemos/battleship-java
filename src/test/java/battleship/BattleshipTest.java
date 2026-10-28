@@ -20,6 +20,7 @@ public class BattleshipTest {
         testFleetReceiveShot();
         testFleetAllSunk();
         testFleetSunkShipName();
+        testFleetAliveShips();
         testFleetRejectsRepeatedShot();
         testFleetRandomPlacementIsValid();
         testCpuNeverRepeatsAndWins();
@@ -119,6 +120,17 @@ public class BattleshipTest {
         assertEquals("first name preserved", "Destroyer", f.shipNameAt(0, 0));
         assertEquals("second name", "Submarine", f.shipNameAt(5, 5));
         assertNull("no ship at empty cell", f.shipNameAt(9, 9));
+    }
+
+    static void testFleetAliveShips() {
+        Board b = new Board();
+        Fleet f = new Fleet(b, new Ship[]{new Ship("Destroyer", 2), new Ship("Submarine", 1)});
+        f.place(0, 0, 0, true);
+        f.place(1, 5, 5, true);
+
+        assertEquals("all afloat", "Destroyer (2), Submarine (1)", f.aliveShips());
+        f.receiveShot(5, 5);
+        assertEquals("sunk one leaves the list", "Destroyer (2)", f.aliveShips());
     }
 
     static void testFleetRejectsRepeatedShot() {

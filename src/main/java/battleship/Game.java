@@ -134,6 +134,7 @@ public class Game {
         BoardPrinter.printSideBySide(playerBoard, playerShotsBoard);
         System.out.printf("Ships left: you %d | CPU %d%n",
                 playerFleet.shipsAlive(), cpuFleet.shipsAlive());
+        if (!cpuFleet.allSunk()) System.out.println("Still afloat: " + cpuFleet.aliveShips());
     }
 
     /**
