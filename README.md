@@ -32,7 +32,7 @@ java -cp out battleship.BattleshipTest
 
 At the start it asks for a seed. If you leave it empty, the match is random; if you type a number, you can replay the same match later. Then you choose if you want to place the ships yourself or let it place them for you.
 
-On your turn just type the coordinate, like `B7`, and it shoots. You can also see the match log or your board. At the end it shows how many shots each side fired and the hit rate.
+On your turn just type the coordinate, like `B7`, and it shoots. You can also see the match log or your board. Under the boards it lists the enemy ships still afloat, so you know if it's worth chasing that last cell or not. At the end it shows how many shots each side fired and the hit rate, and asks if you want another match (it keeps the score while the program is open).
 
 A match halfway through (seed 42):
 
