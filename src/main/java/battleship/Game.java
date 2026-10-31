@@ -31,6 +31,8 @@ public class Game {
     private final Fleet cpuFleet;
 
     private int playerShots, playerHits, cpuShots, cpuHits;
+    // hits in a row; a miss resets the current one
+    private int playerStreak, playerBestStreak, cpuStreak, cpuBestStreak;
 
     public Game(Scanner sc, Random rng, CpuStrategy cpuStrategy) {
         this.sc          = sc;
@@ -170,7 +172,12 @@ public class Game {
         playerShotsBoard.set(rc[0], rc[1],
                 result == ShotResult.MISS ? Board.Cell.MISS : Board.Cell.HIT);
         playerShots++;
-        if (result != ShotResult.MISS) playerHits++;
+        if (result != ShotResult.MISS) {
+            playerHits++;
+            playerBestStreak = Math.max(playerBestStreak, ++playerStreak);
+        } else {
+            playerStreak = 0;
+        }
 
         String msg = formatResult(result, cpuFleet.shipNameAt(rc[0], rc[1]));
         System.out.println(msg + " at " + CoordParser.format(rc[0], rc[1]));
@@ -186,7 +193,12 @@ public class Game {
         ShotResult result = playerFleet.receiveShot(target[0], target[1]);
         cpuStrategy.registerResult(target[0], target[1], result);
         cpuShots++;
-        if (result != ShotResult.MISS) cpuHits++;
+        if (result != ShotResult.MISS) {
+            cpuHits++;
+            cpuBestStreak = Math.max(cpuBestStreak, ++cpuStreak);
+        } else {
+            cpuStreak = 0;
+        }
 
         String msg = formatResult(result, playerFleet.shipNameAt(target[0], target[1]));
         System.out.println("CPU: " + msg + " at " + CoordParser.format(target[0], target[1]));
@@ -209,8 +221,10 @@ public class Game {
 
     private void printStats() {
         System.out.println("\n--- Match stats ---");
-        System.out.printf("You:  %d shots, %d hits (%s)%n", playerShots, playerHits, percent(playerHits, playerShots));
-        System.out.printf("CPU:  %d shots, %d hits (%s)%n", cpuShots, cpuHits, percent(cpuHits, cpuShots));
+        System.out.printf("You:  %d shots, %d hits (%s), best streak %d%n",
+                playerShots, playerHits, percent(playerHits, playerShots), playerBestStreak);
+        System.out.printf("CPU:  %d shots, %d hits (%s), best streak %d%n",
+                cpuShots, cpuHits, percent(cpuHits, cpuShots), cpuBestStreak);
     }
 
     private static String percent(int part, int total) {
