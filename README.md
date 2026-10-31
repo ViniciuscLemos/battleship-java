@@ -30,9 +30,9 @@ java -cp out battleship.BattleshipTest
 
 ## How to play
 
-At the start it asks for a seed. If you leave it empty, the match is random; if you type a number, you can replay the same match later. Then you choose if you want to place the ships yourself or let it place them for you.
+At the start it asks for a seed. If you leave it empty, the match is random; if you type a number, you can replay the same match later. Then it asks the difficulty (easy or normal, more on that below). Then you choose if you want to place the ships yourself or let it place them for you.
 
-On your turn just type the coordinate, like `B7`, and it shoots. You can also see the match log or your board. Under the boards it lists the enemy ships still afloat, so you know if it's worth chasing that last cell or not. At the end it shows how many shots each side fired and the hit rate, and asks if you want another match (it keeps the score while the program is open).
+On your turn just type the coordinate, like `B7`, and it shoots. You can also see the match log or your board. Under the boards it lists the enemy ships still afloat, so you know if it's worth chasing that last cell or not. At the end it shows how many shots each side fired, the hit rate and the longest run of hits in a row, and asks if you want another match (it keeps the score while the program is open).
 
 A match halfway through (seed 42):
 
@@ -50,9 +50,11 @@ The fleet is the classic one: carrier (5), battleship (4), cruiser (3), submarin
 
 ## The AI
 
-The computer uses the "hunt and target" strategy:
+On normal the computer uses the "hunt and target" strategy:
 - while it hasn't hit anything, it shoots more or less at random, but prefers the checkerboard cells, since every ship takes at least 2 cells
 - once it hits something, it tries the neighboring cells until the ship sinks
+
+On easy it just shoots at random and forgets what it hit (`RandomStrategy`). It's good for a first match, or to see how much the hunting part actually helps.
 
 ## Structure
 
@@ -61,7 +63,7 @@ src/main/java/battleship/
   Main.java, Game.java
   model/    Board, Ship, Fleet, ShotResult
   engine/   CoordParser, GameLog
-  cpu/      CpuStrategy, HuntTargetStrategy
+  cpu/      CpuStrategy, HuntTargetStrategy, RandomStrategy
   ui/       BoardPrinter
 ```
 
