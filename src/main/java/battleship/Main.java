@@ -1,6 +1,8 @@
 package battleship;
 
+import battleship.cpu.CpuStrategy;
 import battleship.cpu.HuntTargetStrategy;
+import battleship.cpu.RandomStrategy;
 
 import java.util.Locale;
 import java.util.NoSuchElementException;
@@ -26,8 +28,11 @@ public class Main {
 
         int wins = 0, losses = 0;
         try {
+            System.out.print("Difficulty: 1) Easy  2) Normal (default 2): ");
+            boolean easy = sc.nextLine().trim().equals("1");
             do {
-                if (new Game(sc, rng, new HuntTargetStrategy(rng)).run()) wins++;
+                CpuStrategy cpu = easy ? new RandomStrategy(rng) : new HuntTargetStrategy(rng);
+                if (new Game(sc, rng, cpu).run()) wins++;
                 else losses++;
                 System.out.printf("%nScore: you %d x %d CPU%n", wins, losses);
                 System.out.print("Play again? (y/N): ");

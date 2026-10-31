@@ -24,6 +24,7 @@ public class BattleshipTest {
         testFleetRejectsRepeatedShot();
         testFleetRandomPlacementIsValid();
         testCpuNeverRepeatsAndWins();
+        testEasyCpuShootsEveryCellOnce();
 
         System.out.printf("%nResult: %d passed, %d failed.%n", passed, failed);
         if (failed > 0) System.exit(1);
@@ -188,6 +189,20 @@ public class BattleshipTest {
             }
         }
         assertTrue("CPU wins 30 games without repeating", true);
+    }
+
+    static void testEasyCpuShootsEveryCellOnce() {
+        battleship.cpu.RandomStrategy cpu = new battleship.cpu.RandomStrategy(new java.util.Random(7));
+        boolean[][] seen = new boolean[Board.SIZE][Board.SIZE];
+        for (int i = 0; i < Board.SIZE * Board.SIZE; i++) {
+            int[] t = cpu.chooseTarget();
+            if (t == null || seen[t[0]][t[1]]) {
+                assertTrue("easy CPU repeated or stopped early at shot " + (i + 1), false);
+                return;
+            }
+            seen[t[0]][t[1]] = true;
+        }
+        assertNull("easy CPU has nothing left after 100 shots", cpu.chooseTarget());
     }
 
     private static Ship[] classicShips() {
