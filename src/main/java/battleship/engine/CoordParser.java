@@ -19,7 +19,8 @@ public final class CoordParser {
     /**
      * Parses the coordinate typed by the user.
      *
-     * @param input string in the "A1" to "J10" format (case insensitive)
+     * @param input string in the "A1" to "J10" format (case insensitive).
+     *              The number first ("7B", "10J") also works, people type it both ways
      * @return {@code int[]{row, col}} with 0-based indexes,
      *         or {@code null} if the input is invalid
      */
@@ -27,6 +28,11 @@ public final class CoordParser {
         if (input == null) return null;
         String s = input.trim().toUpperCase(Locale.ROOT).replace(" ", "");
         if (s.length() < 2 || s.length() > 3) return null;
+        if (Character.isDigit(s.charAt(0))) {
+            s = s.charAt(s.length() - 1) + s.substring(0, s.length() - 1);
+        }
+        // only digits after the letter: parseInt would take "A+1" as A1
+        if (!s.substring(1).chars().allMatch(Character::isDigit)) return null;
 
         char colChar = s.charAt(0);
         if (colChar < 'A' || colChar > 'J') return null;

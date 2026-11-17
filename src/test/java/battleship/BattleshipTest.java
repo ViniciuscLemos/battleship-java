@@ -35,6 +35,8 @@ public class BattleshipTest {
         assertArrayEquals("parse J10", new int[]{9, 9},  CoordParser.parse("J10"));
         assertArrayEquals("parse a1 (lower)", new int[]{0, 0}, CoordParser.parse("a1"));
         assertArrayEquals("parse E5",  new int[]{4, 4},  CoordParser.parse("E5"));
+        assertArrayEquals("parse 7b (number first)", new int[]{6, 1}, CoordParser.parse("7b"));
+        assertArrayEquals("parse 10J (number first)", new int[]{9, 9}, CoordParser.parse("10J"));
     }
 
     static void testCoordParserInvalid() {
@@ -44,6 +46,9 @@ public class BattleshipTest {
         assertNull("A0 out of row", CoordParser.parse("A0"));
         assertNull("A11 out of row", CoordParser.parse("A11"));
         assertNull("letters only",  CoordParser.parse("AB"));
+        assertNull("A+1 sign",      CoordParser.parse("A+1"));
+        assertNull("digits only",   CoordParser.parse("12"));
+        assertNull("1A1 mixed",     CoordParser.parse("1A1"));
     }
 
     static void testCoordFormat() {
