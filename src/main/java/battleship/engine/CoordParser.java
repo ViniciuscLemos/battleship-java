@@ -49,6 +49,19 @@ public final class CoordParser {
     }
 
     /**
+     * Reads a ship's direction: H/horizontal or V/vertical, any case.
+     *
+     * @return {@code TRUE} for horizontal, {@code FALSE} for vertical, {@code null} if it's neither
+     */
+    public static Boolean parseDirection(String input) {
+        if (input == null) return null;
+        String s = input.trim().toUpperCase(Locale.ROOT);
+        if (s.equals("H") || s.equals("HORIZONTAL")) return Boolean.TRUE;
+        if (s.equals("V") || s.equals("VERTICAL")) return Boolean.FALSE;
+        return null;
+    }
+
+    /**
      * Converts internal indexes back to the user's notation.
      *
      * @param row 0-based row

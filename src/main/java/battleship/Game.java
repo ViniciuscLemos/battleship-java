@@ -80,15 +80,22 @@ public class Game {
                 BoardPrinter.printSingle("YOUR BOARD", playerBoard, true);
                 System.out.printf("Placing: %s (size %d)%n", SHIP_NAMES[id], SHIP_SIZES[id]);
 
-                System.out.print("Starting coordinate (e.g. A1): ");
-                int[] rc = CoordParser.parse(sc.nextLine());
+                System.out.print("Starting coordinate (e.g. A1, or A1 H to give the direction too): ");
+                // "A1 H" in one line saves a question; the direction is the last word
+                String[] parts = sc.nextLine().trim().split("\s+");
+                Boolean direction = parts.length > 1 ? CoordParser.parseDirection(parts[parts.length - 1]) : null;
+                String coord = direction == null ? String.join("", parts)
+                                                 : String.join("", java.util.Arrays.copyOf(parts, parts.length - 1));
+                int[] rc = CoordParser.parse(coord);
                 if (rc == null) { System.out.println("Invalid coordinate."); continue; }
 
-                System.out.print("Direction (H=horizontal / V=vertical): ");
-                String dir = sc.nextLine().trim().toUpperCase(Locale.ROOT);
-                if (!dir.equals("H") && !dir.equals("V")) { System.out.println("Invalid direction."); continue; }
+                if (direction == null) {
+                    System.out.print("Direction (H=horizontal / V=vertical): ");
+                    direction = CoordParser.parseDirection(sc.nextLine());
+                    if (direction == null) { System.out.println("Invalid direction."); continue; }
+                }
 
-                boolean horiz = dir.equals("H");
+                boolean horiz = direction;
                 if (!playerFleet.canPlace(rc[0], rc[1], SHIP_SIZES[id], horiz)) {
                     System.out.println("It doesn't fit or overlaps another ship. Try again.");
                     continue;

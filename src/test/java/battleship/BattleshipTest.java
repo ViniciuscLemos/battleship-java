@@ -13,6 +13,7 @@ public class BattleshipTest {
         testCoordParserValid();
         testCoordParserInvalid();
         testCoordFormat();
+        testDirection();
         testShipHit();
         testShipSunk();
         testBoardSetGet();
@@ -49,6 +50,13 @@ public class BattleshipTest {
         assertNull("A+1 sign",      CoordParser.parse("A+1"));
         assertNull("digits only",   CoordParser.parse("12"));
         assertNull("1A1 mixed",     CoordParser.parse("1A1"));
+    }
+
+    static void testDirection() {
+        assertEquals("h", Boolean.TRUE, CoordParser.parseDirection(" h "));
+        assertEquals("Vertical", Boolean.FALSE, CoordParser.parseDirection("Vertical"));
+        assertNull("diagonal", CoordParser.parseDirection("d"));
+        assertNull("null direction", CoordParser.parseDirection(null));
     }
 
     static void testCoordFormat() {
