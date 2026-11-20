@@ -123,6 +123,9 @@ public class Game {
             if (playerFleet.allSunk()) {
                 printStatus();
                 System.out.println("\n*** DEFEAT. Your fleet was sunk. ***");
+                // after losing you want to know where they were hiding
+                System.out.println();
+                BoardPrinter.printSingle("WHERE THE ENEMY SHIPS WERE", cpuBoard, true);
                 log.add("End: CPU wins");
                 break;
             }
