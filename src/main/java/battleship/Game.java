@@ -159,12 +159,14 @@ public class Game {
      */
     private boolean doPlayerTurn() {
         System.out.println("\n--- Your turn ---");
-        System.out.println("Type the coordinate to shoot (e.g. B7), or: 2) Show log   3) Show your board");
+        System.out.println("Type the coordinate to shoot (e.g. B7), or: 2/log) Show log   3/board) Show your board");
         System.out.print("> ");
         String opt = sc.nextLine().trim();
+        // the words work too, nobody remembers which number was the log
+        String word = opt.toLowerCase(Locale.ROOT);
 
-        if ("2".equals(opt)) { log.printTail(10);                                              return false; }
-        if ("3".equals(opt)) { BoardPrinter.printSingle("YOUR BOARD", playerBoard, true);      return false; }
+        if ("2".equals(opt) || "log".equals(word))   { log.printTail(10);                                         return false; }
+        if ("3".equals(opt) || "board".equals(word)) { BoardPrinter.printSingle("YOUR BOARD", playerBoard, true); return false; }
 
         // you can shoot by typing the coordinate right away; the "1" from the old menu still works
         int[] rc = CoordParser.parse(opt);
