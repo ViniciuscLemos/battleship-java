@@ -30,7 +30,7 @@ java -cp out battleship.BattleshipTest
 
 ## How to play
 
-At the start it asks for a seed. If you leave it empty, the match is random; if you type a number, you can replay the same match later. Then it asks the difficulty (easy or normal, more on that below). Then you choose if you want to place the ships yourself or let it place them for you. Placing them yourself, `A1 H` puts a ship at A1 going right in one line (`A1` alone asks the direction after).
+At the start it asks for a seed. If you leave it empty, the match is random (and it shows the seed it picked, so you can replay it); if you type a number, you can replay the same match later. Then it asks the difficulty (easy or normal, more on that below). Then you choose if you want to place the ships yourself or let it place them for you. Placing them yourself, `A1 H` puts a ship at A1 going right in one line (`A1` alone asks the direction after).
 
 On your turn just type the coordinate, like `B7` (or `7B`), and it shoots. You can also see the match log or your board (`log`, `board`, or 2 and 3). Under the boards it lists the enemy ships still afloat, so you know if it's worth chasing that last cell or not. If you lose, it shows where the enemy ships were. At the end it shows how many shots each side fired, the hit rate and the longest run of hits in a row, and asks if you want another match (it keeps the score while the program is open).
 

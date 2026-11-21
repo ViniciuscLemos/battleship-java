@@ -16,15 +16,16 @@ public class Main {
 
         System.out.print("Seed (empty for random): ");
         String seedStr = sc.nextLine().trim();
-        Random rng;
+        long seed;
         if (seedStr.isEmpty()) {
-            rng = new Random();
+            // a random seed, but shown, so a good match can be played again
+            seed = new Random().nextInt(1_000_000);
+            System.out.println("Seed for this match: " + seed + " (type it next time to replay it)");
         } else {
-            long seed;
             try { seed = Long.parseLong(seedStr); }
             catch (NumberFormatException e) { seed = seedStr.hashCode(); }
-            rng = new Random(seed);
         }
+        Random rng = new Random(seed);
 
         int wins = 0, losses = 0;
         try {
